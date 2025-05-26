@@ -62,7 +62,7 @@ class QADataset(Dataset):
 
 def train():
     # 设置
-    data_path = '问答对.json'
+    data_path = '问答对.json'   # 此处应更换路径以选择不同训练文本
     tokenizer = BertTokenizerFast.from_pretrained('bert-base-chinese')
     model = get_model()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
