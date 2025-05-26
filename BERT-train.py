@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from BERT import get_model
 from tqdm import tqdm
 
-# 数据集类（改为接受列表数据）
+# 数据集类
 class QADataset(Dataset):
     def __init__(self, data, tokenizer, max_len=384):
         self.data = data
