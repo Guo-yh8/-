@@ -19,7 +19,7 @@ def load_qa_data(file_path):
     for line in lines:
         line = line.strip()
         if line.startswith("问："):
-            # 遇到新问之前，先保存上一组（如果完整）
+            # 遇到新问之前，先保存上一组
             if question and answer:
                 qa_pairs.append({
                     "question": question,
@@ -166,7 +166,7 @@ def train(model, train_loader, val_loader, optimizer, criterion, device, num_epo
 
 if __name__ == "__main__":
     # 参数配置
-    file_path ="扩充问答对10万条.txt"
+    file_path ="问答对.txt" # 这里需要更改不同路径以更换训练文本
     pad_size = 256
     embed = 256
     dim_model = 256
