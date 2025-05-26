@@ -23,21 +23,18 @@ class Multi_Head_Attention(nn.Module):
         Q = self.fc_Q(x).view(batch_size, seq_len, self.num_head, self.dim_head).transpose(1, 2)
         K = self.fc_K(x).view(batch_size, seq_len, self.num_head, self.dim_head).transpose(1, 2)
         V = self.fc_V(x).view(batch_size, seq_len, self.num_head, self.dim_head).transpose(1, 2)
-        # Q, K, V: [batch, head, seq_len, dim_head]
 
-        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.dim_head ** 0.5)  # [batch, head, seq_len, seq_len]
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.dim_head ** 0.5)  
 
-        # 添加 causal mask
-        mask = torch.tril(torch.ones(seq_len, seq_len, device=x.device)).bool()  # [seq_len, seq_len]
+        mask = torch.tril(torch.ones(seq_len, seq_len, device=x.device)).bool()  
         scores = scores.masked_fill(~mask, float('-inf'))
 
         attention = F.softmax(scores, dim=-1)
-        context = torch.matmul(attention, V)  # [batch, head, seq_len, dim_head]
-        context = context.transpose(1, 2).contiguous().view(batch_size, seq_len, -1)  # [batch, seq_len, dim_model]
-
+        context = torch.matmul(attention, V)  
+        context = context.transpose(1, 2).contiguous().view(batch_size, seq_len, -1)  
         out = self.fc(context)
         out = self.dropout(out)
-        out = out + x  # 残差连接
+        out = out + x  
         out = self.layer_norm(out)
         return out
 
@@ -99,9 +96,9 @@ class LanguageTransformer(nn.Module):
         self.fc_out = nn.Linear(dim_model, n_vocab)
 
     def forward(self, x):
-        out = self.embedding(x)  # [batch, seq_len, embed]
+        out = self.embedding(x)  
         out = self.position_embedding(out)
         for layer in self.decoder_layers:
             out = layer(out)
-        logits = self.fc_out(out)  # [batch, seq_len, vocab]
+        logits = self.fc_out(out) 
         return logits
