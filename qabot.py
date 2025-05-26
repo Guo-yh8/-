@@ -5,8 +5,8 @@ from matplotlib.font_manager import FontProperties
 from model import LanguageTransformer
 from train import Tokenizer
 
-# 设置中文字体，避免出现方块
-# 这里用SimHei作为示范，你可以根据自己系统字体调整
+# 设置中文字体
+# 这里用SimHei作为示范
 plt.rcParams['font.sans-serif'] = ['SimHei']
 plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
 
