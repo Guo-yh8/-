@@ -1,7 +1,7 @@
 import json
 import re
 
-txt_path = "问答对.txt"
+txt_path = "问答对.txt"  # 此处应更换路径以选择不同训练文本
 json_path = "问答对.json"
 
 def txt_to_json(filepath_in, filepath_out):
